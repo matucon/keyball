@@ -45,4 +45,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_DEFAULT_LAYER 2
 #define AUTO_MOUSE_TIME 300
 
+// オリジナル定義
 #define LAYER_LED_ENABLE
+#define CUSTOM_OLED_ENABLE
