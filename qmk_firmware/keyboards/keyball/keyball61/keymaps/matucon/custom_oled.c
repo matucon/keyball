@@ -4,6 +4,11 @@
 
 #ifdef OLED_ENABLE
 
+static const char PROGMEM img_title[] = {
+	0x3e, 0x63, 0x41, 0x41, 0x22, 0x00, 0x7c, 0x14, 0x08, 0x00, 0x74, 0x00, 0x00, 0x00, 0x00, 0x00, 
+	0x00, 0x00, 0x00, 0x00, 0x08, 0x7f, 0x49, 0x41, 0x22, 0x1c, 0x00, 0x74, 0x00, 0x38, 0x40, 0x38
+};
+
 #ifdef LAYER_NUM_DESIGN
 #  if LAYER_NUM_DESIGN == 1
 // 肉球の数で数字
@@ -219,25 +224,23 @@ static const char *itoc(uint8_t number) {
 }
 
 static void print_cpi_status(void) {
-    oled_write_ln_P(PSTR("CPI"), false);
-    oled_write(itoc(keyball_get_cpi()), false);
-    oled_write_ln_P(PSTR("00"), false);
+    oled_write_raw_P(img_title, sizeof(img_title));
+    oled_set_cursor(0, 2);
 
-    oled_set_cursor(0, 3);
-    oled_write_P(PSTR("Div "), false);
+    oled_write(itoc(keyball_get_cpi()), false);
+    oled_write_P(PSTR(" "), false);
+    
+    oled_set_cursor(4, 2);
     oled_write_char('0' + keyball_get_scroll_div(), false);
 }
 
 static void print_lock_key_status(void) {
-    oled_set_cursor(0, 5);
+    oled_set_cursor(0, 6);
 
     const led_t led_state = host_keyboard_led_state();
-    oled_write_P(PSTR("Num "), false);
-    oled_write_P(led_state.num_lock ? PSTR("O") : PSTR("-"), false);
-    oled_write_P(PSTR("Cap "), false);
-    oled_write_P(led_state.caps_lock ? PSTR("O") : PSTR("-"), false);
-    oled_write_P(PSTR("Scr "), false);
-    oled_write_P(led_state.scroll_lock ? PSTR("O") : PSTR("-"), false);
+    oled_write_P(led_state.caps_lock ? PSTR("C ") : PSTR("- "), false);
+    oled_write_P(led_state.num_lock ? PSTR("N ") : PSTR("- "), false);
+    oled_write_P(led_state.scroll_lock ? PSTR("S") : PSTR("-"), false);
 }
 
 static void print_layer_status(void) {
