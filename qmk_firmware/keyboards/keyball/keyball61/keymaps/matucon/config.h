@@ -46,5 +46,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_TIME 300
 
 // オリジナル定義
-#define LAYER_LED_ENABLE
-#define CUSTOM_OLED_ENABLE
+#define LAYER_LED_ENABLE   // レイヤーごとにLED色変更
+#define CUSTOM_OLED_ENABLE // オリジナルのOLED表示デザイン
+#define LAYER_NUM_DESIGN 1 // レイヤーNoアイコンデザイン (1:肉球の数、2:肉球内に数字、その他:アラビア数字)
