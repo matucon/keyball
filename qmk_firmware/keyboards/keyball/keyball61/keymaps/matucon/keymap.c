@@ -21,6 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "quantum.h"
 #include "keymap_japanese.h"
 #include "layer_led.c"
+#include "custom_oled.c"
 
 enum my_keyball_keycodes {
 	LAY_TOG = KEYBALL_SAFE_RANGE,
@@ -83,6 +84,15 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #include "lib/oledkit/oledkit.h"
 
+#ifdef CUSTOM_OLED_ENABLE
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (is_keyboard_master()) {
+        return OLED_ROTATION_270;
+    }
+    return rotation;
+}
+#endif
+
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
         oledkit_render_info_user();
@@ -94,10 +104,15 @@ bool oled_task_user(void) {
 }
 
 void oledkit_render_info_user(void) {
+#ifdef CUSTOM_OLED_ENABLE
+    keyball_oled_render_mymain();
+#else
     keyball_oled_render_keyinfo();
     keyball_oled_render_ballinfo();
     keyball_oled_render_layerinfo();
+#endif
 }
+
 #endif
 
 #ifdef POINTING_DEVICE_AUTO_MOUSE_ENABLE
