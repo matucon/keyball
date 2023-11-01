@@ -4,12 +4,12 @@
 
 #ifdef LAYER_LED_ENABLE
 static uint8_t my_latest_val = 50;
-static bool is_layer_led = false;
+static bool layer_led = false;
 #endif
 
 void change_layer_led_color(layer_state_t state) {
 #ifdef LAYER_LED_ENABLE
-    if (!is_layer_led) {
+    if (!layer_led) {
         return;
     }
 
@@ -29,8 +29,8 @@ void change_layer_led_color(layer_state_t state) {
 bool toggle_layer_led(bool pressed) {
 #ifdef LAYER_LED_ENABLE
     if (pressed) {
-        is_layer_led = !is_layer_led;
-        if (!is_layer_led) {
+        layer_led = !layer_led;
+        if (!layer_led) {
             rgblight_sethsv(0, 250, 250);
         }
     }

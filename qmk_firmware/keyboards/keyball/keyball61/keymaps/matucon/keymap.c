@@ -86,7 +86,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             set_auto_mouse_enable(true);
             break;
     }
-      
+    
     return state;
 }
 
@@ -96,9 +96,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #ifdef CUSTOM_OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+#  ifdef LED_INFO_ENABLE
+    return OLED_ROTATION_270;
+#  else
     if (is_keyboard_master()) {
         return OLED_ROTATION_270;
     }
+#  endif
     return rotation;
 }
 #endif
@@ -108,20 +112,28 @@ bool oled_task_user(void) {
         oledkit_render_info_user();
     } else {
         oledkit_render_logo_user();
+#  ifndef CUSTOM_OLED_ENABLE
         oled_scroll_left();
+#  endif
     }
     return true;
 }
 
 void oledkit_render_info_user(void) {
-#ifdef CUSTOM_OLED_ENABLE
+#  ifdef CUSTOM_OLED_ENABLE
     keyball_oled_render_mymain();
-#else
+#  else
     keyball_oled_render_keyinfo();
     keyball_oled_render_ballinfo();
     keyball_oled_render_layerinfo();
-#endif
+#  endif
 }
+
+#  ifdef LED_INFO_ENABLE
+void oledkit_render_logo_user(void) {
+    keyball_oled_render_mysub();
+}
+#  endif
 
 #endif
 

@@ -192,25 +192,14 @@ static const char PROGMEM img_scroll_no[] = {
 };
 
 // 数値を文字列に変換します。
-// generate by ChatGPT 3.5
 static const char *itoc(uint8_t number) {
-    static char str[4]; 
-    int i = 0;
-    int is_negative = 0;
-
-    if (number < 0) {
-        is_negative = 1;
-        number = -number;
-    }
+    static char str[5]; 
+    uint8_t i = 0;
 
     do {
         str[i++] = number % 10 + '0';
         number /= 10;
     } while (number != 0);
-
-    if (is_negative) {
-        str[i++] = '-';
-    }
 
     int len = i;
     for (int j = 0; j < len / 2; j++) {
@@ -221,6 +210,29 @@ static const char *itoc(uint8_t number) {
 
     str[i] = '\0';
     return str;
+}
+
+// 数値を4桁固定の文字列に変換します。
+static const char *format_u3d(uint8_t d) {
+    static char buf[4] = {0}; // max width (3) + NUL (1)
+    char        lead   = ' ';
+
+    buf[2] = (d % 10) + '0';
+    d /= 10;
+    if (d == 0) {
+        buf[1] = lead;
+        lead   = ' ';
+    } else {
+        buf[1] = (d % 10) + '0';
+        d /= 10;
+    }
+    if (d == 0) {
+        buf[0] = lead;
+    } else {
+        buf[0] = (d % 10) + '0';
+        d /= 10;
+    }
+    return buf;
 }
 
 static void print_cpi_status(void) {
@@ -238,9 +250,9 @@ static void print_lock_key_status(void) {
     oled_set_cursor(0, 6);
 
     const led_t led_state = host_keyboard_led_state();
-    oled_write_P(led_state.caps_lock ? PSTR("C ") : PSTR("- "), false);
-    oled_write_P(led_state.num_lock ? PSTR("N ") : PSTR("- "), false);
-    oled_write_P(led_state.scroll_lock ? PSTR("S") : PSTR("-"), false);
+    oled_write_P(led_state.caps_lock   ? PSTR("C ") : PSTR("- "), false);
+    oled_write_P(led_state.num_lock    ? PSTR("N ") : PSTR("- "), false);
+    oled_write_P(led_state.scroll_lock ? PSTR("S")  : PSTR("-") , false);
 }
 
 static void print_layer_status(void) {
@@ -266,6 +278,31 @@ void keyball_oled_render_mymain(void) {
     print_lock_key_status();
     print_layer_status();
     print_scroll_status();
+}
+
+void keyball_oled_render_mysub() {
+    oled_write_ln_P(PSTR(":LED:"), false);
+
+    oled_write_P(rgblight_is_enabled() ? PSTR("led o") : PSTR("led -"), false);
+#  ifdef LAYER_LED_ENABLE
+    oled_write_P(layer_led ? PSTR("lay o") : PSTR("lay -"), false); // layer_led.c のstatic変数(mainのProMicroの変数なので、subでは参照できない)
+#  endif
+    oled_write_P(PSTR("spd "), false);
+    oled_write(itoc(rgblight_get_speed()), false);
+
+    oled_write_P(PSTR("mo"), false);
+    oled_write(format_u3d(rgblight_get_mode()), false);
+
+    // カーソル移動先に文字などがあるとOLEDタイムアウトが効かないので、format_u3d()で編集
+    oled_set_cursor(0, 7);
+    oled_write_P(PSTR("h "), false);
+    oled_write(format_u3d(rgblight_get_hue()), false);
+
+    oled_write_P(PSTR("s "), false);
+    oled_write(format_u3d(rgblight_get_sat()), false);
+
+    oled_write_P(PSTR("v "), false);
+    oled_write_ln(format_u3d(rgblight_get_val()), false);
 }
 
 #endif
