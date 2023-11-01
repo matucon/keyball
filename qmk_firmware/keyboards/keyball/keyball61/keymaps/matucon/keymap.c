@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "custom_oled.c"
 
 enum my_keyball_keycodes {
-	LAY_TOG = KEYBALL_SAFE_RANGE,
+	LAY_TOG = KEYBALL_SAFE_RANGE, // レイヤーLEDトグル
 };
 
 // clang-format off
@@ -95,6 +95,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #include "lib/oledkit/oledkit.h"
 
 #ifdef CUSTOM_OLED_ENABLE
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 #  ifdef LED_INFO_ENABLE
     return OLED_ROTATION_270;
