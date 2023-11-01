@@ -32,6 +32,8 @@ bool toggle_layer_led(bool pressed) {
         layer_led = !layer_led;
         if (!layer_led) {
             rgblight_sethsv(0, 250, 250);
+        } else if (rgblight_get_val() == 0) {
+            rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 96);
         }
     }
 #endif
