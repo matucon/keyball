@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAP_CODE_DELAY 5
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 5
-#define KEYBALL_CPI_DEFAULT 900
+#define KEYBALL_CPI_DEFAULT 1100
 #define KEYBALL_SCROLL_DIV_DEFAULT 5
 
 #define OLED_TIMEOUT 15000
@@ -45,7 +45,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_DEFAULT_LAYER 2
 #define AUTO_MOUSE_TIME 300
 
+#define TAPPING_TERM 180
+
 // オリジナル定義
 #define LAYER_LED_ENABLE   // レイヤーごとにLED色変更
 #define CUSTOM_OLED_ENABLE // オリジナルのOLED表示デザイン
 #define LAYER_NUM_DESIGN 1 // レイヤーNoアイコンデザイン (1:肉球の数、2:肉球内に数字、その他:アラビア数字)
+#define LED_INFO_ENABLE    // サブ側のOLEDにLED情報を表示
