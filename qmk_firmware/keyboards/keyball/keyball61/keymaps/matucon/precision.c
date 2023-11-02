@@ -2,7 +2,7 @@
 
 #include "precision.h"
 
-static const uint16_t PROGMEM down_cpi = 3;
+static const uint16_t PROGMEM down_cpi = 4;
 
 static uint16_t latest_cpi = 1;
 static bool     cpi_state  = false;

@@ -273,14 +273,14 @@ static void print_scroll_status(void) {
     oled_write_raw_P(keyball.scroll_mode ? img_scroll_down : img_scroll_no, sizeof(img_scroll_no));
 }
 
-void keyball_oled_render_mymain(void) {
+static void render_default(void) {
     print_cpi_status();
     print_lock_key_status();
     print_layer_status();
     print_scroll_status();
 }
 
-void keyball_oled_render_mysub() {
+static void render_led_info(void) {
     oled_write_ln_P(PSTR(":LED:"), false);
 
     oled_write_P(rgblight_is_enabled() ? PSTR("led o") : PSTR("led -"), false);
@@ -303,6 +303,55 @@ void keyball_oled_render_mysub() {
 
     oled_write_P(PSTR("v "), false);
     oled_write_ln(format_u3d(rgblight_get_val()), false);
+}
+
+#ifdef OLED_PAGE_ENABLE
+static uint8_t page_no = 0;
+
+void change_page(bool is_add) {
+    oled_clear();
+    page_no += is_add ? 1 : -1;
+}
+
+// 参考: https://twitter.com/jpskenn/status/1556077247945003008
+
+#ifdef VER_INFO_ENABLE
+#include "version.h"
+#endif
+
+static void render_version(void) {
+#  ifdef VER_INFO_ENABLE
+    oled_write_ln_P(PSTR(QMK_KEYBOARD), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_ln_P(PSTR(QMK_VERSION), false);
+    oled_write_P(PSTR("\n"), false);
+    oled_write_ln_P(PSTR(QMK_BUILDDATE), false);
+#  else
+    oled_write_P(PSTR("empty"), false);
+#  endif
+}
+
+void keyball_oled_render_mymain(void) {
+    switch(page_no % 3) {
+        case 1:
+            render_version();
+            break;
+        case 2:
+            render_led_info();
+            break;
+        default:
+            render_default();
+            break;
+    }
+}
+#else
+void keyball_oled_render_mymain(void) {
+    render_default();
+}
+#endif
+
+void keyball_oled_render_mysub() {
+    render_led_info();
 }
 
 #endif

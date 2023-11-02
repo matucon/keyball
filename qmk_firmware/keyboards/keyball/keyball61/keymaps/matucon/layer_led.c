@@ -29,7 +29,7 @@ void change_layer_led_color(layer_state_t state) {
 }
 
 // レイヤーLEDカラーの有効・無効を切り替える
-bool toggle_layer_led(bool pressed) {
+void toggle_layer_led(bool pressed) {
 #ifdef LAYER_LED_ENABLE
     if (!pressed) {
         return;
@@ -42,7 +42,6 @@ bool toggle_layer_led(bool pressed) {
         rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 96);
     }
 #endif
-    return true;
 }
 
 // スクロールモードに合わせて一部のLED色を変更する

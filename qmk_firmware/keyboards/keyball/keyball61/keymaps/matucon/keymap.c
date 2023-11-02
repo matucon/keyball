@@ -28,6 +28,8 @@ enum my_keyball_keycodes {
 	LAY_TOG = KEYBALL_SAFE_RANGE, // レイヤーLEDトグル
     PRC_TOG,                      // Precision モードトグル
     PRC_SW,                       // Precision モードスイッチ
+    OLED_IN,                      // OLED ページ＋
+    OLED_DE,                      // OLED ページ-
 };
 
 // clang-format off
@@ -57,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [3] = LAYOUT_universal(
-    RGB_TOG  , LAY_TOG  , _______  , _______  , _______  , _______  ,                                  RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
+    RGB_TOG  , LAY_TOG  , OLED_DE  , OLED_IN  , _______  , _______  ,                                  RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
     RGB_MOD  , RGB_HUI  , RGB_SAI  , RGB_VAI  , RGB_SPI  , _______  ,                                  RGB_M_X  , RGB_M_G  , RGB_M_T  , RGB_M_TW , _______  , _______  ,
     RGB_RMOD , RGB_HUD  , RGB_SAD  , RGB_VAD  , RGB_SPD  , _______  ,                                  CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE , KBC_RST  ,
     _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , EE_CLR  ,              EE_CLR  , KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   , _______  , _______  ,
@@ -150,7 +152,8 @@ void pointing_device_init_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LAY_TOG:
-            return toggle_layer_led(record->event.pressed);
+            toggle_layer_led(record->event.pressed);
+            return true;
         case SCRL_TO:
             toggle_scroll_led(record->event.pressed);
             return true;
@@ -160,6 +163,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case PRC_TOG:
             precision_toggle(record->event.pressed);
             return true;
+            
+#ifdef OLED_PAGE_ENABLE
+        case OLED_IN:
+            if (record->event.pressed) {
+                change_page(true);
+            }
+            return true;
+        case OLED_DE:
+            if (record->event.pressed) {
+                change_page(false);
+            }
+            return true;
+#endif
     }
     return true;
 }

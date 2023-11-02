@@ -52,3 +52,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define CUSTOM_OLED_ENABLE // オリジナルのOLED表示デザイン
 #define LAYER_NUM_DESIGN 1 // レイヤーNoアイコンデザイン (1:肉球の数、2:肉球内に数字、その他:アラビア数字)
 #define LED_INFO_ENABLE    // サブ側のOLEDにLED情報を表示
+#define OLED_PAGE_ENABLE   // メイン側のOLEDを複数ページ化
+#define VER_INFO_ENABLE    // メイン側のOLED 2ページ目にバージョン情報を表示
