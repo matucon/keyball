@@ -4,9 +4,11 @@
 
 #ifdef LAYER_LED_ENABLE
 static uint8_t my_latest_val = 50;
-static bool layer_led = false;
+static bool    layer_led     = false;
+static uint8_t latest_hue    = 0;
 #endif
 
+// レイヤーごとにLEDの色を変える
 void change_layer_led_color(layer_state_t state) {
 #ifdef LAYER_LED_ENABLE
     if (!layer_led) {
@@ -21,11 +23,12 @@ void change_layer_led_color(layer_state_t state) {
         case 1: rgblight_sethsv(234, rgblight_get_sat(), my_latest_val); break;
         case 2: rgblight_sethsv( 36, rgblight_get_sat(), my_latest_val); break;
         case 3: rgblight_sethsv(170, rgblight_get_sat(), my_latest_val); break;
-        case 4: rgblight_sethsv(  0, rgblight_get_sat(), my_latest_val); break;
+        case 4: rgblight_sethsv( 85, rgblight_get_sat(), my_latest_val); break;
     }
 #endif
 }
 
+// レイヤーLEDカラーの有効・無効を切り替える
 bool toggle_layer_led(bool pressed) {
 #ifdef LAYER_LED_ENABLE
     if (pressed) {
@@ -38,4 +41,23 @@ bool toggle_layer_led(bool pressed) {
     }
 #endif
     return true;
+}
+
+// スクロールモードに合わせて一部のLED色を変更する
+void toggle_scroll_led(bool pressed) {
+#ifdef LAYER_LED_ENABLE
+    if (!pressed) {
+        return;
+    }
+
+    if (!keyball_get_scroll_mode()) {
+        latest_hue = rgblight_get_hue();
+        rgblight_sethsv_at(0, rgblight_get_sat(), rgblight_get_val(), 70);
+        rgblight_sethsv_range(0, rgblight_get_sat(), rgblight_get_val(), 37, 44);
+
+    } else {
+        rgblight_sethsv_at(latest_hue, rgblight_get_sat(), rgblight_get_val(), 70);
+        rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 37, 44);
+    }
+#endif
 }

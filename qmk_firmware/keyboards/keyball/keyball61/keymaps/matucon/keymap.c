@@ -148,6 +148,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LAY_TOG:
             return toggle_layer_led(record->event.pressed);
+        case SCRL_TO:
+            toggle_scroll_led(record->event.pressed);
+            return true;
     }
     return true;
 }
