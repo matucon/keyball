@@ -305,6 +305,17 @@ static void render_led_info(void) {
     oled_write_ln(format_u3d(rgblight_get_val()), false);
 }
 
+// static void render_automouse(void) {
+//     oled_write_P(PSTR("on "), false);
+//     oled_write_P(get_auto_mouse_enable() ? PSTR("o\n") : PSTR("-\n"), false);
+//     oled_write_P(PSTR("tg "), false);
+//     oled_write_P(get_auto_mouse_toggle() ? PSTR("o\n") : PSTR("-\n"), false);
+//     oled_write_P(PSTR("ly "), false);
+//     oled_write_ln(itoc(get_auto_mouse_layer()), false);
+//     oled_write_P(PSTR("de "), false);
+//     oled_write_ln(itoc(get_auto_mouse_debounce()), false);
+// }
+
 #ifdef OLED_PAGE_ENABLE
 static uint8_t page_no = 0;
 
@@ -334,6 +345,7 @@ void keyball_oled_render_mymain(void) {
     switch(page_no % 3) {
         case 1:  render_led_info(); break;
         case 2:  render_version();  break;
+        // case 3:  render_automouse();break;
         default: render_default();  break;
     }
 }
