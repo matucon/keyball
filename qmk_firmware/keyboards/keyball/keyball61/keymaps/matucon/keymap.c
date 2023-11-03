@@ -32,6 +32,15 @@ enum my_keyball_keycodes {
     OLED_DE,                      // OLED ページ-
 };
 
+const uint16_t PROGMEM combo1[] = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM combo2[] = {KC_PAST, KC_P4, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(combo1, PRC_SW),
+    COMBO(combo2, PRC_SW)
+};
+
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(

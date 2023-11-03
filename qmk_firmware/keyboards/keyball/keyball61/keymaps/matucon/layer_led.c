@@ -5,7 +5,7 @@
 #ifdef LAYER_LED_ENABLE
 static uint8_t my_latest_val = 50;
 static bool    layer_led     = false;
-static uint8_t latest_hue    = 0;
+// static uint8_t latest_hue    = 0;
 #endif
 
 // レイヤーごとにLEDの色を変える
@@ -23,9 +23,9 @@ void change_layer_led_color(layer_state_t state) {
         case 1: rgblight_sethsv(234, rgblight_get_sat(), my_latest_val); break;
         case 2: 
             rgblight_sethsv( 36, rgblight_get_sat(), my_latest_val);
-            if (!get_auto_mouse_toggle()) {
-                rgblight_sethsv_range(67, rgblight_get_sat(), rgblight_get_val(), 66, 71);
-            }
+            // if (!get_auto_mouse_toggle()) {
+            //     rgblight_sethsv_range(84, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+            // }
             break;
         case 3: rgblight_sethsv(170, rgblight_get_sat(), my_latest_val); break;
         case 4: rgblight_sethsv( 85, rgblight_get_sat(), my_latest_val); break;
@@ -43,31 +43,32 @@ void toggle_layer_led(bool pressed) {
     layer_led = !layer_led;
     if (!layer_led) {
         rgblight_sethsv(0, 250, 250);
-    } else if (rgblight_get_val() == 0) {
-        rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 96);
-    }
+    } 
+    // else if (rgblight_get_val() == 0) {
+    //     rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 96);
+    // }
 #endif
 }
 
 // スクロールモードに合わせて一部のLED色を変更する
 void toggle_scroll_led(bool pressed) {
-#ifdef LAYER_LED_ENABLE
-    if (!pressed) {
-        return;
-    }
+// #ifdef LAYER_LED_ENABLE
+//     if (!pressed) {
+//         return;
+//     }
 
-    if (!keyball_get_scroll_mode()) {
-        latest_hue = rgblight_get_hue();
-        rgblight_sethsv_range(0, rgblight_get_sat(), rgblight_get_val(), 66, 71);
-        rgblight_sethsv_range(0, rgblight_get_sat(), rgblight_get_val(), 37, 44);
+//     if (!keyball_get_scroll_mode()) {
+//         latest_hue = rgblight_get_hue();
+//         rgblight_sethsv_range(0, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+//         rgblight_sethsv_range(0, rgblight_get_sat(), rgblight_get_val(), 37, 44);
 
-    } else {
-        if (!get_auto_mouse_toggle()) {
-            rgblight_sethsv_range(67, rgblight_get_sat(), rgblight_get_val(), 66, 71);
-        } else {
-            rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 66, 71);
-        }
-        rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 37, 44);
-    }
-#endif
+//     } else {
+//         if (!get_auto_mouse_toggle()) {
+//             rgblight_sethsv_range(84, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+//         } else {
+//             rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+//         }
+//         rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 37, 44);
+//     }
+// #endif
 }

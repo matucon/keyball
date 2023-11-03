@@ -325,26 +325,26 @@ void change_page(bool is_add) {
 }
 
 
-#ifdef VER_INFO_ENABLE
-#include "version.h"
-#endif
+// #ifdef VER_INFO_ENABLE
+// #include "version.h"
+// #endif
 
-static void render_version(void) {
-#  ifdef VER_INFO_ENABLE
-    oled_write_ln_P(PSTR(QMK_KEYBOARD), false);
-    oled_write_P(PSTR("\n"), false);
-    oled_write_ln_P(PSTR(QMK_VERSION), false);
-    oled_write_P(PSTR("\n"), false);
-    oled_write_ln_P(PSTR(QMK_BUILDDATE), false);
-#  else
-    oled_write_P(PSTR("empty"), false);
-#  endif
-}
+// static void render_version(void) {
+// #  ifdef VER_INFO_ENABLE
+//     oled_write_ln_P(PSTR(QMK_KEYBOARD), false);
+//     oled_write_P(PSTR("\n"), false);
+//     oled_write_ln_P(PSTR(QMK_VERSION), false);
+//     oled_write_P(PSTR("\n"), false);
+//     oled_write_ln_P(PSTR(QMK_BUILDDATE), false);
+// #  else
+//     oled_write_P(PSTR("empty"), false);
+// #  endif
+// }
 
 void keyball_oled_render_mymain(void) {
-    switch(page_no % 3) {
+    switch(page_no % 2) {
         case 1:  render_led_info(); break;
-        case 2:  render_version();  break;
+        // case 2:  render_version();  break;
         // case 3:  render_automouse();break;
         default: render_default();  break;
     }

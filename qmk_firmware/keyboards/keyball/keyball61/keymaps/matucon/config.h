@@ -22,12 +22,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifdef RGBLIGHT_ENABLE
 #    define RGBLIGHT_EFFECT_BREATHING
-#    define RGBLIGHT_EFFECT_RAINBOW_MOOD
-#    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+// #    define RGBLIGHT_EFFECT_RAINBOW_MOOD
+// #    define RGBLIGHT_EFFECT_RAINBOW_SWIRL
 // #    define RGBLIGHT_EFFECT_SNAKE
 // #    define RGBLIGHT_EFFECT_KNIGHT
 // #    define RGBLIGHT_EFFECT_CHRISTMAS
-#    define RGBLIGHT_EFFECT_STATIC_GRADIENT
+// #    define RGBLIGHT_EFFECT_STATIC_GRADIENT
 // #    define RGBLIGHT_EFFECT_RGB_TEST
 // #    define RGBLIGHT_EFFECT_ALTERNATING
 // #    define RGBLIGHT_EFFECT_TWINKLE
@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_TIME 500
 
 #define TAPPING_TERM 180
+#define COMBO_TERM 30
 
 // オリジナル定義
 #define LAYER_LED_ENABLE   // レイヤーごとにLED色変更
