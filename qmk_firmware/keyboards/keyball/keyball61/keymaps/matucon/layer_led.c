@@ -21,7 +21,12 @@ void change_layer_led_color(layer_state_t state) {
             rgblight_sethsv(rgblight_get_hue(), rgblight_get_sat(), 0); 
             break;
         case 1: rgblight_sethsv(234, rgblight_get_sat(), my_latest_val); break;
-        case 2: rgblight_sethsv( 36, rgblight_get_sat(), my_latest_val); break;
+        case 2: 
+            rgblight_sethsv( 36, rgblight_get_sat(), my_latest_val);
+            if (!get_auto_mouse_toggle()) {
+                rgblight_sethsv_range(67, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+            }
+            break;
         case 3: rgblight_sethsv(170, rgblight_get_sat(), my_latest_val); break;
         case 4: rgblight_sethsv( 85, rgblight_get_sat(), my_latest_val); break;
     }
@@ -57,7 +62,11 @@ void toggle_scroll_led(bool pressed) {
         rgblight_sethsv_range(0, rgblight_get_sat(), rgblight_get_val(), 37, 44);
 
     } else {
-        rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+        if (!get_auto_mouse_toggle()) {
+            rgblight_sethsv_range(67, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+        } else {
+            rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 66, 71);
+        }
         rgblight_sethsv_range(latest_hue, rgblight_get_sat(), rgblight_get_val(), 37, 44);
     }
 #endif
