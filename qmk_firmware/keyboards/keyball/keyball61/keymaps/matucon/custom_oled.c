@@ -313,7 +313,6 @@ void change_page(bool is_add) {
     page_no += is_add ? 1 : -1;
 }
 
-// 参考: https://twitter.com/jpskenn/status/1556077247945003008
 
 #ifdef VER_INFO_ENABLE
 #include "version.h"
@@ -333,15 +332,9 @@ static void render_version(void) {
 
 void keyball_oled_render_mymain(void) {
     switch(page_no % 3) {
-        case 1:
-            render_version();
-            break;
-        case 2:
-            render_led_info();
-            break;
-        default:
-            render_default();
-            break;
+        case 1:  render_led_info(); break;
+        case 2:  render_version();  break;
+        default: render_default();  break;
     }
 }
 #else
