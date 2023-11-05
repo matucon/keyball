@@ -34,12 +34,51 @@ enum my_keyball_keycodes {
 
 const uint16_t PROGMEM combo1[] = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM combo2[] = {KC_PAST, KC_P4, COMBO_END};
+const uint16_t PROGMEM combo3[] = {KC_LEFT, KC_UP, COMBO_END};
+const uint16_t PROGMEM combo4[] = {KC_RIGHT, KC_UP, COMBO_END};
+const uint16_t PROGMEM combo5[] = {KC_DOWN, KC_UP, COMBO_END};
+const uint16_t PROGMEM combo6[] = {KC_4, KC_T, COMBO_END};
 
-combo_t key_combos[] = {
-    COMBO(combo1, PRC_SW),
-    COMBO(combo2, PRC_SW)
+const uint16_t PROGMEM combof1[]  = {KC_1, KC_Q, COMBO_END};
+const uint16_t PROGMEM combof2[]  = {KC_2, KC_W, COMBO_END};
+const uint16_t PROGMEM combof3[]  = {KC_3, KC_E, COMBO_END};
+const uint16_t PROGMEM combof4[]  = {KC_4, KC_R, COMBO_END};
+const uint16_t PROGMEM combof5[]  = {KC_5, KC_T, COMBO_END};
+const uint16_t PROGMEM combof6[]  = {KC_6, KC_Y, COMBO_END};
+const uint16_t PROGMEM combof7[]  = {KC_7, KC_U, COMBO_END};
+const uint16_t PROGMEM combof8[]  = {KC_8, KC_I, COMBO_END};
+const uint16_t PROGMEM combof9[]  = {KC_9, KC_O, COMBO_END};
+const uint16_t PROGMEM combof10[] = {KC_0, KC_P, COMBO_END};
+const uint16_t PROGMEM combof11[] = {KC_MINS, KC_INT3, COMBO_END};
+
+const uint16_t PROGMEM lent[] = {KC_Y, KC_H, COMBO_END};
+
+enum combo_events {
+    LENT,
 };
 
+combo_t key_combos[] = {
+    [LENT] = COMBO_ACTION(lent), // 先頭に記述しないと普通のCOMBOが上書きされる
+
+    COMBO(combo1, PRC_SW),
+    COMBO(combo2, PRC_SW),
+    COMBO(combo3, KC_HOME),
+    COMBO(combo4, KC_END),
+    COMBO(combo5, PRC_SW),
+    COMBO(combo6, A(KC_F4)),
+
+    COMBO(combof1, KC_F1),
+    COMBO(combof2, KC_F2),
+    COMBO(combof3, KC_F3),
+    COMBO(combof4, KC_F4),
+    COMBO(combof5, KC_F5),
+    COMBO(combof6, KC_F6),
+    COMBO(combof7, KC_F7),
+    COMBO(combof8, KC_F8),
+    COMBO(combof9, KC_F9),
+    COMBO(combof10, KC_F10),
+    COMBO(combof11, KC_F11),
+};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -68,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [3] = LAYOUT_universal(
-    RGB_TOG  , LAY_TOG  , OLED_DE  , OLED_IN  , _______  , _______  ,                                  RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
+    RGB_TOG  , LAY_TOG  , OLED_IN  , CM_TOGG  , _______  , _______  ,                                  RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
     RGB_MOD  , RGB_HUI  , RGB_SAI  , RGB_VAI  , RGB_SPI  , _______  ,                                  RGB_M_X  , RGB_M_G  , RGB_M_T  , RGB_M_TW , _______  , _______  ,
     RGB_RMOD , RGB_HUD  , RGB_SAD  , RGB_VAD  , RGB_SPD  , _______  ,                                  CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE , KBC_RST  ,
     _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , EE_CLR  ,              EE_CLR  , KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   , _______  , _______  ,
@@ -160,18 +199,10 @@ void pointing_device_init_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LAY_TOG:
-            toggle_layer_led(record->event.pressed);
-            return true;
-        case SCRL_TO:
-            toggle_scroll_led(record->event.pressed);
-            return true;
-        case PRC_SW:
-            precision_switch(record->event.pressed);
-            return true;
-        case PRC_TOG:
-            precision_toggle(record->event.pressed);
-            return true;
+        case LAY_TOG: toggle_layer_led(record->event.pressed);  return true;
+        case SCRL_TO: toggle_scroll_led(record->event.pressed); return true;
+        case PRC_SW:  precision_switch(record->event.pressed);  return true;
+        case PRC_TOG: precision_toggle(record->event.pressed);  return true;
             
 #ifdef OLED_PAGE_ENABLE
         case OLED_IN:
@@ -187,4 +218,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #endif
     }
     return true;
+}
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case LENT:
+      if (pressed) {
+        tap_code16(KC_LEFT);
+        tap_code16(KC_ENT); 
+        // SEND_STRING("ok");
+      }
+      break;
+  }
 }

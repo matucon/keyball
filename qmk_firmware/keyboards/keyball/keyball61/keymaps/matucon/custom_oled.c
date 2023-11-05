@@ -253,6 +253,12 @@ static void print_lock_key_status(void) {
     oled_write_P(led_state.caps_lock   ? PSTR("C ") : PSTR("- "), false);
     oled_write_P(led_state.num_lock    ? PSTR("N ") : PSTR("- "), false);
     oled_write_P(led_state.scroll_lock ? PSTR("S")  : PSTR("-") , false);
+
+    // oled_write_P(led_state.caps_lock   ? PSTR("C") : PSTR("-"), led_state.caps_lock);
+    // oled_write_P(PSTR(" "), false);
+    // oled_write_P(led_state.num_lock    ? PSTR("N") : PSTR("-"), led_state.num_lock);
+    // oled_write_P(PSTR(" "), false);
+    // oled_write_P(led_state.scroll_lock ? PSTR("S")  : PSTR("-") , led_state.scroll_lock);
 }
 
 static void print_layer_status(void) {
@@ -281,7 +287,7 @@ static void render_default(void) {
 }
 
 static void render_led_info(void) {
-    oled_write_ln_P(PSTR(":LED:"), false);
+    oled_write_ln_P(PSTR("STATE"), false);
 
     oled_write_P(rgblight_is_enabled() ? PSTR("led o") : PSTR("led -"), false);
 #  ifdef LAYER_LED_ENABLE
@@ -303,6 +309,8 @@ static void render_led_info(void) {
 
     oled_write_P(PSTR("v "), false);
     oled_write_ln(format_u3d(rgblight_get_val()), false);
+
+    oled_write_P(is_combo_enabled() ? PSTR("cmb o") : PSTR("cmb -"), false);
 }
 
 // static void render_automouse(void) {

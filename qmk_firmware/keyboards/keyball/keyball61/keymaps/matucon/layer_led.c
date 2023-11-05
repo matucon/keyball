@@ -22,7 +22,7 @@ void change_layer_led_color(layer_state_t state) {
             break;
         case 1: rgblight_sethsv(234, rgblight_get_sat(), my_latest_val); break;
         case 2: 
-            rgblight_sethsv( 36, rgblight_get_sat(), my_latest_val);
+            rgblight_sethsv( 17, rgblight_get_sat(), my_latest_val);
             // if (!get_auto_mouse_toggle()) {
             //     rgblight_sethsv_range(84, rgblight_get_sat(), rgblight_get_val(), 66, 71);
             // }
