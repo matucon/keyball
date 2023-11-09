@@ -29,9 +29,9 @@ combo_t key_combos[] = {
 #endif
 
 enum my_keyball_keycodes {
-    LAY_TOG = KEYBALL_SAFE_RANGE, // 繝ｬ繧､繝､繝ｼLED繝医げ繝ｫ
-    PRC_TOG,                      // Precision 繝｢繝ｼ繝峨ヨ繧ｰ繝ｫ
-    PRC_SW,                       // Precision 繝｢繝ｼ繝峨せ繧､繝�繝�  
+    LAY_TOG = KEYBALL_SAFE_RANGE, // レイヤーLEDトグル
+    PRC_TOG,                      // Precision モードトグル
+    PRC_SW,                       // Precision モードスイッチ  
 };
 
 // clang-format off
