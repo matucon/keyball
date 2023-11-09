@@ -46,7 +46,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define AUTO_MOUSE_TIME 500
 
 #define TAPPING_TERM 180
-#define COMBO_TERM 60
+#define COMBO_TERM 80
+
+#define HOLD_ON_OTHER_KEY_PRESS
 
 // オリジナル定義
 #define LAYER_LED_ENABLE   // レイヤーごとにLED色変更

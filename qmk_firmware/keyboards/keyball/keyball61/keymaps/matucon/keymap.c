@@ -32,12 +32,14 @@ enum my_keyball_keycodes {
     OLED_DE,                      // OLED ページ-
 };
 
-const uint16_t PROGMEM combo1[] = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM combo2[] = {KC_PAST, KC_P4, COMBO_END};
+const uint16_t PROGMEM combo1[] = {KC_D, KC_F, COMBO_END};
+const uint16_t PROGMEM combo2[] = {KC_P5, KC_P6, COMBO_END};
 const uint16_t PROGMEM combo3[] = {KC_LEFT, KC_UP, COMBO_END};
 const uint16_t PROGMEM combo4[] = {KC_RIGHT, KC_UP, COMBO_END};
 const uint16_t PROGMEM combo5[] = {KC_DOWN, KC_UP, COMBO_END};
 const uint16_t PROGMEM combo6[] = {KC_4, KC_T, COMBO_END};
+const uint16_t PROGMEM combo7[] = {KC_DOWN, KC_BTN1, COMBO_END};
+const uint16_t PROGMEM combo8[] = {KC_DOWN, KC_BTN2, COMBO_END};
 
 const uint16_t PROGMEM combof1[]  = {KC_1, KC_Q, COMBO_END};
 const uint16_t PROGMEM combof2[]  = {KC_2, KC_W, COMBO_END};
@@ -66,6 +68,8 @@ combo_t key_combos[] = {
     COMBO(combo4, KC_END),
     COMBO(combo5, PRC_SW),
     COMBO(combo6, A(KC_F4)),
+    COMBO(combo7, KC_BTN4),
+    COMBO(combo8, KC_BTN5),
 
     COMBO(combof1, KC_F1),
     COMBO(combof2, KC_F2),
@@ -80,6 +84,16 @@ combo_t key_combos[] = {
     COMBO(combof11, KC_F11),
 };
 
+enum {
+  TD_RPAR_BR = 0,
+  TD_LPAR_BR,
+};
+
+tap_dance_action_t tap_dance_actions[] = {
+  [TD_RPAR_BR]  = ACTION_TAP_DANCE_DOUBLE(KC_RBRC, S(KC_RBRC)),
+  [TD_LPAR_BR]  = ACTION_TAP_DANCE_DOUBLE(KC_NUHS, S(KC_NUHS))
+};
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_universal(
@@ -91,7 +105,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [1] = LAYOUT_universal(
-    S(KC_ESC)  , S(KC_1)  , KC_LBRC  , S(KC_3)  , S(KC_4)  , S(KC_5)  ,                                  KC_EQL   , S(KC_6)  ,S(KC_QUOT), S(KC_8)  , S(KC_9)   , S(KC_INT1),
+    // S(KC_ESC)  , S(KC_1)  , KC_LBRC  , S(KC_3)  , S(KC_4)  , S(KC_5)  ,                                  KC_EQL   , S(KC_6)  ,S(KC_QUOT), S(KC_8)  , S(KC_9)   , S(KC_INT1),
+    S(KC_ESC)  , S(KC_1)  , KC_LBRC  , S(KC_3)  , S(KC_4)  , S(KC_5)  ,                                  KC_EQL   , S(KC_6)  ,S(KC_QUOT), TD(TD_RPAR_BR)  , TD(TD_LPAR_BR)   , S(KC_INT1),
     S(KC_TAB)  , S(KC_Q)  , S(KC_W)  , S(KC_E)  , S(KC_R)  , S(KC_T)  ,                                  S(KC_Y)  , S(KC_U)  ,S(KC_I)   , S(KC_O)  , S(KC_P)   , S(KC_INT3),
     S(KC_LCTL) , S(KC_A)  , S(KC_S)  , S(KC_D)  , S(KC_F)  , S(KC_G)  ,                                  S(KC_H)  , S(KC_J)  ,S(KC_K)   , S(KC_L)  , KC_QUOT   , S(KC_2)   ,
     _______    , S(KC_Z)  , S(KC_X)  , S(KC_C)  , S(KC_V)  , S(KC_B)  ,S(KC_RBRC),           S(KC_NUHS), S(KC_N)  , S(KC_M)  ,S(KC_COMM), S(KC_DOT), S(KC_SLSH), S(KC_RSFT),
@@ -221,13 +236,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
-  switch(combo_index) {
-    case LENT:
-      if (pressed) {
-        tap_code16(KC_LEFT);
-        tap_code16(KC_ENT); 
-        // SEND_STRING("ok");
-      }
-      break;
-  }
+    switch(combo_index) {
+        case LENT:
+            if (pressed) {
+            tap_code16(KC_LEFT);
+            tap_code16(KC_ENT); 
+            // SEND_STRING("ok");
+            }
+            break;
+    }
 }

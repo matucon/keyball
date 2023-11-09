@@ -213,27 +213,27 @@ static const char *itoc(uint8_t number) {
 }
 
 // 数値を4桁固定の文字列に変換します。
-static const char *format_u3d(uint8_t d) {
-    static char buf[4] = {0}; // max width (3) + NUL (1)
-    char        lead   = ' ';
+// static const char *format_u3d(uint8_t d) {
+//     static char buf[4] = {0}; // max width (3) + NUL (1)
+//     char        lead   = ' ';
 
-    buf[2] = (d % 10) + '0';
-    d /= 10;
-    if (d == 0) {
-        buf[1] = lead;
-        lead   = ' ';
-    } else {
-        buf[1] = (d % 10) + '0';
-        d /= 10;
-    }
-    if (d == 0) {
-        buf[0] = lead;
-    } else {
-        buf[0] = (d % 10) + '0';
-        d /= 10;
-    }
-    return buf;
-}
+//     buf[2] = (d % 10) + '0';
+//     d /= 10;
+//     if (d == 0) {
+//         buf[1] = lead;
+//         lead   = ' ';
+//     } else {
+//         buf[1] = (d % 10) + '0';
+//         d /= 10;
+//     }
+//     if (d == 0) {
+//         buf[0] = lead;
+//     } else {
+//         buf[0] = (d % 10) + '0';
+//         d /= 10;
+//     }
+//     return buf;
+// }
 
 static void print_cpi_status(void) {
     oled_write_raw_P(img_title, sizeof(img_title));
@@ -286,32 +286,32 @@ static void render_default(void) {
     print_scroll_status();
 }
 
-static void render_led_info(void) {
-    oled_write_ln_P(PSTR("STATE"), false);
+// static void render_led_info(void) {
+//     oled_write_ln_P(PSTR("STATE"), false);
 
-    oled_write_P(rgblight_is_enabled() ? PSTR("led o") : PSTR("led -"), false);
-#  ifdef LAYER_LED_ENABLE
-    oled_write_P(layer_led ? PSTR("lay o") : PSTR("lay -"), false); // layer_led.c のstatic変数(mainのProMicroの変数なので、subでは参照できない)
-#  endif
-    oled_write_P(PSTR("spd "), false);
-    oled_write(itoc(rgblight_get_speed()), false);
+//     oled_write_P(rgblight_is_enabled() ? PSTR("led o") : PSTR("led -"), false);
+// #  ifdef LAYER_LED_ENABLE
+//     oled_write_P(layer_led ? PSTR("lay o") : PSTR("lay -"), false); // layer_led.c のstatic変数(mainのProMicroの変数なので、subでは参照できない)
+// #  endif
+//     oled_write_P(PSTR("spd "), false);
+//     oled_write(itoc(rgblight_get_speed()), false);
 
-    oled_write_P(PSTR("mo"), false);
-    oled_write(format_u3d(rgblight_get_mode()), false);
+//     oled_write_P(PSTR("mo"), false);
+//     oled_write(format_u3d(rgblight_get_mode()), false);
 
-    // カーソル移動先に文字などがあるとOLEDタイムアウトが効かないので、format_u3d()で編集
-    oled_set_cursor(0, 7);
-    oled_write_P(PSTR("h "), false);
-    oled_write(format_u3d(rgblight_get_hue()), false);
+//     // カーソル移動先に文字などがあるとOLEDタイムアウトが効かないので、format_u3d()で編集
+//     oled_set_cursor(0, 7);
+//     oled_write_P(PSTR("h "), false);
+//     oled_write(format_u3d(rgblight_get_hue()), false);
 
-    oled_write_P(PSTR("s "), false);
-    oled_write(format_u3d(rgblight_get_sat()), false);
+//     oled_write_P(PSTR("s "), false);
+//     oled_write(format_u3d(rgblight_get_sat()), false);
 
-    oled_write_P(PSTR("v "), false);
-    oled_write_ln(format_u3d(rgblight_get_val()), false);
+//     oled_write_P(PSTR("v "), false);
+//     oled_write_ln(format_u3d(rgblight_get_val()), false);
 
-    oled_write_P(is_combo_enabled() ? PSTR("cmb o") : PSTR("cmb -"), false);
-}
+//     oled_write_P(is_combo_enabled() ? PSTR("cmb o") : PSTR("cmb -"), false);
+// }
 
 // static void render_automouse(void) {
 //     oled_write_P(PSTR("on "), false);
@@ -351,7 +351,7 @@ void change_page(bool is_add) {
 
 void keyball_oled_render_mymain(void) {
     switch(page_no % 2) {
-        case 1:  render_led_info(); break;
+        // case 1:  render_led_info(); break;
         // case 2:  render_version();  break;
         // case 3:  render_automouse();break;
         default: render_default();  break;
@@ -364,7 +364,7 @@ void keyball_oled_render_mymain(void) {
 #endif
 
 void keyball_oled_render_mysub() {
-    render_led_info();
+    // render_led_info();
 }
 
 #endif

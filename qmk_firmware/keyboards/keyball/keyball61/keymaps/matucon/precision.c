@@ -13,13 +13,14 @@ void precision_toggle(bool pressed) {
     }
     
     uint16_t current_cpi = keyball_get_cpi();
-    if (cpi_state) {
-        keyball_set_cpi(down_cpi != current_cpi ? current_cpi : latest_cpi);
-    } else {
+    if (!cpi_state || down_cpi != current_cpi) {
         latest_cpi = current_cpi;
         keyball_set_cpi(down_cpi);
+        cpi_state = true;
+    } else {
+        keyball_set_cpi(latest_cpi);
+        cpi_state = false;
     }
-    cpi_state = !cpi_state;
 }
 
 void precision_switch(bool pressed) {
