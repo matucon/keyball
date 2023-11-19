@@ -29,9 +29,10 @@ combo_t key_combos[] = {
 #endif
 
 enum my_keyball_keycodes {
-    LAY_TOG = KEYBALL_SAFE_RANGE, // ���C���[LED�g�O��
-    PRC_TOG,                      // Precision ���[�h�g�O��
-    PRC_SW,                       // Precision ���[�h�X�C�b�`  
+    LAY_TOG = KEYBALL_SAFE_RANGE, // レイヤーLEDトグル
+    PRC_TOG,                      // Precision モードトグル
+    PRC_SW,                       // Precision モードスイッチ 
+    OLED_IN,                      // OLED ページ変更
 };
 
 // clang-format off
@@ -61,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [3] = LAYOUT_universal(
-    RGB_TOG  , LAY_TOG  , CM_TOGG  , _______  , _______  , _______  ,                                  RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
+    RGB_TOG  , LAY_TOG  , CM_TOGG  , OLED_IN  , _______  , _______  ,                                  RGB_M_P  , RGB_M_B  , RGB_M_R  , RGB_M_SW , RGB_M_SN , RGB_M_K  ,
     RGB_MOD  , RGB_HUI  , RGB_SAI  , RGB_VAI  , _______  , _______  ,                                  RGB_M_X  , RGB_M_G  , RGB_M_T  , RGB_M_TW , _______  , _______  ,
     RGB_RMOD , RGB_HUD  , RGB_SAD  , RGB_VAD  , _______  , _______  ,                                  CPI_D1K  , CPI_D100 , CPI_I100 , CPI_I1K  , KBC_SAVE , KBC_RST  ,
     _______  , _______  , SCRL_DVD , SCRL_DVI , SCRL_MO  , SCRL_TO  , EE_CLR  ,            EE_CLR  , KC_HOME  , KC_PGDN  , KC_PGUP  , KC_END   , _______  , _______  ,
@@ -107,12 +108,34 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #ifdef OLED_ENABLE
 
-#    include "lib/oledkit/oledkit.h"
+#include "lib/oledkit/oledkit.h"
+#include "custom_oled.c"
+
+// 画面は両側回転させるように修正します。
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    return OLED_ROTATION_270;
+}
 
 void oledkit_render_info_user(void) {
-    keyball_oled_render_keyinfo();
-    keyball_oled_render_ballinfo();
-    keyball_oled_render_layerinfo();
+    // keyball_oled_render_keyinfo();
+    // keyball_oled_render_ballinfo();
+    // keyball_oled_render_layerinfo();
+    keyball_oled_render_mymain();
+}
+
+// サブ側OLEDの表示処理
+void oledkit_render_logo_user(void) {
+    keyball_oled_render_mysub();
+}
+
+// メイン、サブの判定
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+        oledkit_render_info_user();
+    } else {
+        oledkit_render_logo_user();
+    }
+    return true;
 }
 #endif
 
@@ -136,6 +159,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case PRC_SW:  precision_switch(record->event.pressed); return false;
         case PRC_TOG: precision_toggle(record->event.pressed); return false;
         #endif
+
+        case OLED_IN: change_page(record->event.pressed); return true;
+
         default: break;
     }
     return true;
