@@ -35,18 +35,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAP_CODE_DELAY 5
 
-#define OLED_TIMEOUT 30000                // OLEDŽ©“®Á“”ŽžŠÔ
-#define TAPPING_TERM 180                  // ƒL[’·‰Ÿ‚µŽžŠÔ
-#define DYNAMIC_KEYMAP_LAYER_COUNT 5      // ƒŒƒCƒ„[”
-#define KEYBALL_CPI_DEFAULT 1100          // ƒ}ƒEƒX‘¬“x
-#define KEYBALL_SCROLL_DIV_DEFAULT 5      // ƒXƒNƒ[ƒ‹‘¬“x
-#define COMBO_TERM 80                     // ƒRƒ“ƒ{”»’èŽžŠÔ
-#define COMBO_ONLY_FROM_LAYER 0           // ƒŒƒCƒ„[‚ÉˆË‘¶‚µ‚È‚¢ƒRƒ“ƒ{(ƒŒƒCƒ„[0‚ÌƒL[ƒ}ƒbƒv‚Ì‚Ý”½‰f)
-#define POINTING_DEVICE_AUTO_MOUSE_ENABLE // Automatic Mouse Layer —LŒø‰»
-#define AUTO_MOUSE_DEFAULT_LAYER 2        // Automatic Mouse Layer ‚ÅØ‚è‘Ö‚¦‚éƒŒƒCƒ„[”Ô†
-#define AUTO_MOUSE_TIME 500               // Automatic Mouse Layer ‚ÅŒ³‚ÌƒŒƒCƒ„[‚É–ß‚é‚Ü‚Å‚ÌŽžŠÔ
+#define OLED_TIMEOUT 30000                // OLEDè‡ªå‹•æ¶ˆç¯æ™‚é–“
+#define TAPPING_TERM 180                  // ã‚­ãƒ¼é•·æŠ¼ã—æ™‚é–“
+#define DYNAMIC_KEYMAP_LAYER_COUNT 5      // ãƒ¬ã‚¤ãƒ¤ãƒ¼æ•°
+#define KEYBALL_CPI_DEFAULT 1100          // ãƒžã‚¦ã‚¹é€Ÿåº¦
+#define KEYBALL_SCROLL_DIV_DEFAULT 5      // ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é€Ÿåº¦
+#define COMBO_TERM 80                     // ã‚³ãƒ³ãƒœåˆ¤å®šæ™‚é–“
+#define COMBO_ONLY_FROM_LAYER 0           // ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ä¾å­˜ã—ãªã„ã‚³ãƒ³ãƒœ(ãƒ¬ã‚¤ãƒ¤ãƒ¼0ã®ã‚­ãƒ¼ãƒžãƒƒãƒ—ã®ã¿åæ˜ )
+#define POINTING_DEVICE_AUTO_MOUSE_ENABLE // Automatic Mouse Layer æœ‰åŠ¹åŒ–
+#define AUTO_MOUSE_DEFAULT_LAYER 2        // Automatic Mouse Layer ã§åˆ‡ã‚Šæ›¿ãˆã‚‹ãƒ¬ã‚¤ãƒ¤ãƒ¼ç•ªå·
+#define AUTO_MOUSE_TIME 500               // Automatic Mouse Layer ã§å…ƒã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«æˆ»ã‚‹ã¾ã§ã®æ™‚é–“
 
-// ƒJƒXƒ^ƒ€’è‹`
-#define LAYER_LED_ENABLE                  // ƒŒƒCƒ„[LED —LŒø‰»
-#define PRECISION_ENABLE                  // ƒvƒŒƒVƒWƒ‡ƒ“ƒ‚[ƒh —LŒø‰»
-#define PRECISION_CPI 4                   // ƒvƒŒƒVƒWƒ‡ƒ“ƒ‚[ƒh ‚Å•ÏX‚·‚éCPI (1/100‚Ì’l‚ðŽw’è)
+// ã‚«ã‚¹ã‚¿ãƒ å®šç¾©
+#define LAYER_LED_ENABLE                  // ãƒ¬ã‚¤ãƒ¤ãƒ¼LED æœ‰åŠ¹åŒ–
+#define PRECISION_ENABLE                  // ãƒ—ãƒ¬ã‚·ã‚¸ãƒ§ãƒ³ãƒ¢ãƒ¼ãƒ‰ æœ‰åŠ¹åŒ–
+#define PRECISION_CPI 4                   // ãƒ—ãƒ¬ã‚·ã‚¸ãƒ§ãƒ³ãƒ¢ãƒ¼ãƒ‰ ã§å¤‰æ›´ã™ã‚‹CPI (1/100ã®å€¤ã‚’æŒ‡å®š)
